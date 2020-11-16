@@ -26,7 +26,7 @@ class PagesController < ApplicationController
 
     @page = Page.new(pages_params)
 
-    if @page.save
+    if @page.save?
       redirect_to pages_path
     else
       render :new
@@ -36,5 +36,22 @@ class PagesController < ApplicationController
   def pages_params
     params.require(:page).permit(:title, :author, :body)
   end
+
+  def edit
+    #return from here
+    @page = Page.find(params[:id])
+  end
+
+  def update
+    @page = Page.find(params[:id])
+    if @page.update(pages_params)
+      redirect_to pages_path
+    else
+      render :edit
+    end
+  end
+
+  
+
 
 end
