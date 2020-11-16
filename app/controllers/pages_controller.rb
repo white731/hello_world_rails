@@ -14,5 +14,27 @@ class PagesController < ApplicationController
   end
 
   def new
+    #.new makes a new page object in memory
+    #.create stores information to database
+    @page = Page.new
   end
+
+  def create
+    # puts "-------------------"
+    # params
+    # puts "-------------------"
+
+    @page = Page.new(pages_params)
+
+    if @page.save
+      redirect_to pages_path
+    else
+      render :new
+    end
+  end
+
+  def pages_params
+    params.require(:page).permit(:title, :author, :body)
+  end
+
 end
